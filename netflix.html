@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Netflix & Snacks?</title>
+  <style>
+    body {
+      background: #fff0f5;
+      font-family: 'Segoe UI', cursive;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #ff6f91;
+      margin-bottom: 20px;
+    }
+
+    .response-buttons a {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .yes {
+      background-color: #ffb3c6;
+      color: white;
+    }
+
+    .yes:hover {
+      background-color: #ff8fa3;
+      transform: scale(1.05);
+    }
+
+    .no {
+      background-color: #ddd;
+      color: #333;
+    }
+
+    .no:hover {
+      background-color: #bbb;
+      transform: scale(1.05);
+    }
+
+    /* Popcorn gifs in each corner */
+    .popcorn {
+      width: 200px;
+      height: auto;
+      position: absolute;
+      z-index: 10;
+    }
+
+    .top-left {
+      top: 400px;
+      left: 400px;
+    }
+
+    .top-right {
+      top: 400px;
+      right: 400px;
+    }
+
+    .bottom-left {
+      bottom: 400px;
+      left: 400px;
+    }
+
+    .bottom-right {
+      bottom: 400px;
+      right: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGFja256c3VtNGRzeGUzN21jZ2ZzNXJ1b2lnM290cGJ4eHZub255bCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/btbJLqOdzrGUIMT1wt/giphy.gif" class="popcorn top-left" alt="Popcorn">
+  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3OTZmenIxaDBlM2t6bHlzN3BnbW90cnBiNHZtMjkybG4xOXBub2dmNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Sb7WSbjHFNIL6/giphy.gif" class="popcorn top-right" alt="Popcorn">
+  <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3lmY2t6MHRmZGNjd3cwdWJqOGU4OWd3eTI5bWJpcGw0N2NxbXkzeiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/26Ff8FSKDoV3Z1Ye4/giphy.gif" class="popcorn bottom-left" alt="Popcorn">
+  <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ajhpMmUwMXliNTJxd291Z2J4bTN1N2xwMTdqcXFlaHM2aDQwYmNiNCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oeHLbWsXXGd7yNprq/giphy.gif" class="popcorn bottom-right" alt="Popcorn">
+
+  <h1>Do you want to watch Netflix and eat snacks together? 🍿🍫</h1>
+  <div class="response-buttons">
+    <a href="https://www.netflix.com/browse" class="yes">Yes, of course! 💕</a>
+  </div>
+
+</body>
+</html>
