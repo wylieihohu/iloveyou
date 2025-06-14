@@ -1,1 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Envelope Love Letter</title>
+  <style>
+    body {
+      background: #fff6f0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', cursive;
+      overflow-x: hidden;
+    }
 
+    .container {
+      position: relative;
+      width: 300px;
+      height: 200px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .envelope {
+      width: 100%;
+      height: 100%;
+      background: #ffc6d0;
+      border: 2px solid #e59fa6;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+
+    .flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: #ffa8b5;
+      clip-path: polygon(0 0, 50% 100%, 100% 0);
+      transform-origin: top center;
+      transition: transform 0.6s ease;
+      z-index: 2;
+    }
+
+    .envelope.open .flap {
+      transform: rotateX(-150deg);
+    }
+
+    .letter {
+      position: absolute;
+      bottom: 210px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      padding: 20px;
+      background: #fdf6e3;
+      border: 1px solid #e0c69d;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      color: #5e473a;
+      font-size: 16px;
+      line-height: 1.6;
+      display: none;
+      z-index: 5;
+    }
+
+    .envelope.open + .letter {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Bubu and Dudu GIF styles */
+    .gif {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100px;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .gif-left {
+      left: 10px;
+    }
+
+    .gif-right {
+      right: 10px;
+    }
+
+    .show-gif {
+      opacity: 1;
+    }
+        /* Floating hearts and sparkles */
+    .floating-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    }
+
+    .floating-container.active {
+    opacity: 1;
+    }
+
+    .floating {
+    position: absolute;
+    animation: floatUp 4s ease-in forwards;
+    font-size: 24px;
+    opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+    0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+    }
+    }
+    @keyframes burst {
+    0% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2) rotate(360deg);
+        opacity: 0;
+    }
+    }
+
+    .burst {
+    animation: burst 0.5s forwards;
+    }
+    .falling-gif {
+    position: absolute;
+    width: 150px;
+    animation-name: fallDown;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  @keyframes fallDown {
+    0% {
+      transform: translateY(-100px);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(110vh);
+      opacity: 1;
+    }
+  }
+    .cute-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: #ffb3c6;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    text-align: center;
+  }
+
+    .cute-button:hover {
+    background-color: #ff8fa3;
+    transform: scale(1.05);
+  }
+  #netflixButton {
+  display: none;
+  }
+
+  </style>
+</head>
+<body>
+<div id="falling-gifs-container" style="pointer-events:none; position: fixed; top:0; left:0; width: 400vw; height: 1000vh; overflow: visible; z-index: 20;"></div>
+
+<!-- Envelope & Letter -->
+<div class="container" onclick="toggleEnvelope()">
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+  </div>
+  <div class="letter" id="love-letter">
+    Hey babyyy!<br><br>
+    I'm really sorry for what happened the past few days. I just wanted to let you know that I love you very very much and I am always thinking of you my queen. I'm so sorry I hope you can forgive me and I hope that this letter can help make you feel better! I love you baby.<br>
+    Your Love,<br>
+    Wylie💌
+  </div>
+</div>
+<a href="netflix.html" class="cute-button" id="netflixButton">I love you too❤️</a>
+<script>
+    const gifUrls = [
+      "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaDV0eTZ4Z3B4aWx0bW45a3VqdWU3dTNzeGo1c3Rpam4wb3J4aTZnZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/t9PYDFWy1U80UDQWRC/giphy.gif",  // Bubu
+      "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXNvOWpuOGRpbzltc3QzaGY3eWtvZDJkdGJjYmdhZ2NkdGwyb25yZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/xOvhMKk3EyS1LKQtkK/giphy.gif",   // Dudu
+      "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3h0bHpja2lyczBlNGwzNXBhdTV6cnY1bDljcHR4ZmZxOXM4a2NkMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/KDteE5sy0H1gW8kxQV/giphy.gif",   // Cute heart gif
+      "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExMXFocDdjZG1pN210NHN0cGRsOWdyMWJqejVyZ2VxY3dlbDd5N25wZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Snclx7FTzghgifcbqV/giphy.gif",   // Sparkle
+      "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZnlhb3JwcTlqZm4zdG15bjBxbW90cHByd2IybTUyNTlxN3MwNnBheCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/H8bVfBtBR6o2uX0fug/giphy.gif"    // Another cute gif
+    ];
+  
+    const container = document.getElementById("falling-gifs-container");
+    let gifsActive = false;
+  
+    function startFallingGifs() {
+      if (gifsActive) return;
+      gifsActive = true;
+  
+      // For each gif, create 3-5 falling copies
+      gifUrls.forEach((url) => {
+        const count = Math.floor(Math.random() * 3) + 5; // 3 to 5 copies
+        for (let i = 0; i < count; i++) {
+          createFallingGif(url, i * 700 * Math.random());
+        }
+      });
+    }
+  
+    function createFallingGif(src, delay) {
+      const gif = document.createElement("img");
+      gif.src = src;
+      gif.classList.add("falling-gif");
+  
+      // Random horizontal start position (avoid overflow)
+      const maxLeft = window.innerWidth - 10;
+      gif.style.left = Math.random() * maxLeft + "px";
+  
+      // Random animation duration 4-7 seconds
+      const duration = 4 + Math.random() * 3;
+      gif.style.animationDuration = duration + "s";
+      gif.style.animationDelay = delay + "ms";
+  
+      container.appendChild(gif);
+  
+      // Remove gif after animation finishes
+      gif.addEventListener("animationend", () => {
+        gif.remove();
+        if (container.childElementCount === 0) {
+          gifsActive = false;
+        }
+      });
+    }
+  
+    function stopFallingGifs() {
+      container.innerHTML = "";
+      gifsActive = false;
+    }
+
+    function toggleEnvelope() {
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('love-letter');
+    const button = document.getElementById('netflixButton');
+
+    envelope.classList.toggle('open');
+    letter.classList.toggle('visible');
+
+    // Show the button when the envelope is open
+    if (envelope.classList.contains('open')) {
+      button.style.display = 'inline-block';
+      startFallingGifs();
+    } else {
+      button.style.display = 'none';
+      startFallingGifs();
+    }
+  }
+</script>
+
+
+<div class="floating-container" id="float-container"></div>
+
+
+</body>
+</html>
+
+<!-- Hey Baby!
+
+I'm really sorry for what happened the past few days. I just wanted to let you know that I love you very very much and I am always thinking of you my queen. I'm so sorry I hope you can forgive me and I hope that this letter can help make you feel better!
+Your Love 💌 -->
